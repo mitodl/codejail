@@ -3,6 +3,11 @@
 # configure is a reexport for backwards compatibility
 from .jail import configure  # pylint: disable=unused-import
 from .jail import get_codejail
+    # The number of processes and threads to allow.
+    "NPROC": 5,
+        * `"NPROC"`: the maximum number of process or threads creatable by the
+            jailed code.  The default is 5.
+
 
 
 def jail_code(command, code=None, files=None, extra_files=None, argv=None,
@@ -36,3 +41,9 @@ def jail_code(command, code=None, files=None, extra_files=None, argv=None,
         slug=slug
     )
     return result
+
+    # Allow a small number of subprocess and threads.  One limit controls both,
+    # and at least OpenBLAS (imported by numpy) requires threads.
+    nproc = LIMITS["NPROC"]
+    if nproc:
+        rlimits.append((resource.RLIMIT_NPROC, (nproc, nproc)))
