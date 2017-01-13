@@ -4,9 +4,9 @@
 from .jail import configure  # pylint: disable=unused-import
 from .jail import get_codejail
     # The number of processes and threads to allow.
-    "NPROC": 5,
+    "NPROC": 15,
         * `"NPROC"`: the maximum number of process or threads creatable by the
-            jailed code.  The default is 5.
+            jailed code.  The default is 15.
 
 
 
